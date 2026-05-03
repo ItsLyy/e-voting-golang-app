@@ -80,4 +80,4 @@ voter {
 
 ## 📄 License
 
-This project was created for academic purposes. See [LICENSE](https://www.notion.so/LICENSE) for more details.
+This project was created for academic purposes. See [LICENSE](https://github.com/ItsLyy/e-voting-golang-app/blob/main/LICENSE) for more details.
