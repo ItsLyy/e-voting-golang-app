@@ -12,31 +12,30 @@ E-Voting is an application for managing election data and counting votes quickly
 
 ## ✨ Features
 
-| # | Feature | Description |
-| --- | --- | --- |
-| a | Candidate Management | Add, edit, and delete candidate profile data |
-| b | Vote Recording | Record candidate number, vision-mission, and accumulated incoming votes |
-| c | Candidate Search | Search by candidate number using **Sequential Search** and **Binary Search** |
-| d | Data Sorting | Sort by most votes or candidate number using **Selection Sort** and **Insertion Sort** |
-| e | Vote Statistics | Display vote percentage per candidate and total votes cast |
+| #   | Feature              | Description                                                                            |
+| --- | -------------------- | -------------------------------------------------------------------------------------- |
+| a   | Candidate Management | Add, edit, and delete candidate profile data                                           |
+| b   | Vote Recording       | Record candidate number, vision-mission, and accumulated incoming votes                |
+| c   | Candidate Search     | Search by candidate number using **Sequential Search** and **Binary Search**           |
+| d   | Data Sorting         | Sort by most votes or candidate number using **Selection Sort** and **Insertion Sort** |
+| e   | Vote Statistics      | Display vote percentage per candidate and total votes cast                             |
 
 ---
 
 ## 🚀 Getting Started
 
 1. Clone this repository:
-    
-    ```bash
-    git clone <https://github.com/username/e-voting-golang-app.git>
-    cd e-voting-golang-app
-    ```
-    
+
+   ```bash
+   git clone https://github.com/ItsLyy/e-voting-golang-app.git
+   cd e-voting-golang-app
+   ```
+
 2. Run the program:
-    
-    ```bash
-    go run main.go
-    ```
-    
+
+   ```bash
+   go run main.go
+   ```
 
 ---
 
@@ -55,9 +54,6 @@ voter {
     chosen_candidate_number : int
 }
 ```
-
-> **Note:** A candidate's total votes are derived from the length of the voter list who chose that candidate — not stored as a separate field. This keeps the data consistent and avoids sync issues.
-> 
 
 ---
 
