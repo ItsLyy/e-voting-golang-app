@@ -1,6 +1,10 @@
 package model
 
+const NMAXCANDIDATE = 10
+
 type Canditate struct {
-	candidateNumber int
-	name, visionMission string
+	CandidateNumber int
+	Name, VisionMission string
 }
+
+type Canditates [NMAXCANDIDATE]Canditate
