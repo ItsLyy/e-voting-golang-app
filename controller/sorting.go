@@ -4,7 +4,7 @@ import (
 	"e-voting/model"
 )
 
-func InsertingCandidateSortingByPointAsc(candidates model.Canditates, N int, sort string, sortBy string) model.Canditates {
+func InsertionCandidateSorting(candidates model.Canditates, N int, sort string, sortBy string) model.Canditates {
 	var sortedCandidates model.Canditates = candidates
 	var temp model.Canditate
 	var i int = 1
@@ -13,7 +13,7 @@ func InsertingCandidateSortingByPointAsc(candidates model.Canditates, N int, sor
 	case "desc":
 		for i < N {
 			var j int = i
-			for j >= 1 && IsCandidateGreater(candidates[j], candidates[j-1], sortBy) {
+			for j >= 0 && IsCandidateGreater(sortedCandidates[j], sortedCandidates[j-1], sortBy) {
 				temp=sortedCandidates[j]
 				sortedCandidates[j] = sortedCandidates[j-1]
 				sortedCandidates[j-1] = temp
@@ -24,7 +24,7 @@ func InsertingCandidateSortingByPointAsc(candidates model.Canditates, N int, sor
 	default:
 		for i < N {
 			var j int = i
-			for j >= 1 && IsCandidateLess(candidates[j], candidates[j-1], sortBy) {
+			for j >= 1 && IsCandidateLess(sortedCandidates[j], sortedCandidates[j-1], sortBy) {
 				temp=sortedCandidates[j]
 				sortedCandidates[j] = sortedCandidates[j-1]
 				sortedCandidates[j-1] = temp
@@ -33,11 +33,10 @@ func InsertingCandidateSortingByPointAsc(candidates model.Canditates, N int, sor
 			i++
 		}
 	}
-
 	return sortedCandidates
 }
 
-func SelectionVotersSortingByName(voters model.Voters, N int, sort string, sortBy string) model.Voters {
+func SelectionVotersSorting(voters model.Voters, N int, sort string, sortBy string) model.Voters {
 	var sortedVoters model.Voters = voters
 	var temp model.Voter
 	var i int = N - 1
