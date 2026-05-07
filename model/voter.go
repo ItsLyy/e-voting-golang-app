@@ -1,14 +1,15 @@
 package model
 
-const NMAX = 20
+const NMAXVOTER = 20
+
 type Voter struct {
 	VoterId, CandidateNumber int
 	Name string
 }
- 
-type Voters [NMAX]Voter 
 
-func GenerateData()Voters {
+type Voters [NMAXVOTER]Voter
+
+func GenerateVotersData() Voters {
 	var data Voters = Voters{
 		{VoterId : 1,Name : "Hammam",CandidateNumber: 02},
     	{VoterId : 2,Name : "Ali",CandidateNumber: 01},

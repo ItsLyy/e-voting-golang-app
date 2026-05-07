@@ -1,31 +1,68 @@
-package controller 
+package controller
 
-import  "e-voting/model"
+import (
+	"e-voting/model"
+)
 
-func SelectionSortingVoters(voters model.Voters, N int, sort string, sortBy string)model.Voters {
-	var apajalah = voters
-	var temp model.Voter 
-	var i int = N-1
+func InsertionCandidateSorting(candidates model.Canditates, N int, sort string, sortBy string) model.Canditates {
+	var sortedCandidates model.Canditates = candidates
+	var temp model.Canditate
+	var i int = 1
 
 	switch sort {
-	case "increasing" :
-		for i > 0 {
-			var j int = MaxVoteridx(apajalah, i, sortBy)
-			temp = apajalah[i]
-			apajalah[j] = apajalah[i]
-			apajalah[i] = temp 
+	case "desc":
+		for i < N {
+			var j int = i
+			for j >= 0 && IsCandidateGreater(sortedCandidates[j], sortedCandidates[j-1], sortBy) {
+				temp=sortedCandidates[j]
+				sortedCandidates[j] = sortedCandidates[j-1]
+				sortedCandidates[j-1] = temp
+				j--
+			}
+			i++
+		}
+	default:
+		for i < N {
+			var j int = i
+			for j >= 1 && IsCandidateLess(sortedCandidates[j], sortedCandidates[j-1], sortBy) {
+				temp=sortedCandidates[j]
+				sortedCandidates[j] = sortedCandidates[j-1]
+				sortedCandidates[j-1] = temp
+				j--
+			}
+			i++
+		}
+	}
+	return sortedCandidates
+}
 
+func SelectionVotersSorting(voters model.Voters, N int, sort string, sortBy string) model.Voters {
+	var sortedVoters model.Voters = voters
+	var temp model.Voter
+	var i int = N - 1
+
+	switch sort {
+	case "desc":
+		for i > 0 {
+			var j int = MinIndexVoter(sortedVoters, i, sortBy)
+	
+			temp = sortedVoters[j]
+			sortedVoters[j] = sortedVoters[i]
+			sortedVoters[i] = temp
+	
 			i--
 		}
-	default : 
+	default:
 		for i > 0 {
-			var j int = MinVoterIdx(apajalah,i,sortBy)
-			temp = apajalah[j]
-			apajalah[j] = apajalah[i]
-			apajalah[i] = temp
-
+			var j int = MaxIndexVoter(sortedVoters, i, sortBy)
+	
+			temp = sortedVoters[j]
+			sortedVoters[j] = sortedVoters[i]
+			sortedVoters[i] = temp
+	
 			i--
 		}
 	}
-	return apajalah
+
+	return sortedVoters
 }
