@@ -1,6 +1,6 @@
 package model
 
-const NMAXVOTER = 999
+const NMAXVOTER = 20
 
 type Voter struct {
 	VoterId, CandidateNumber int
