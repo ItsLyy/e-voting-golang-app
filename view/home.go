@@ -28,6 +28,7 @@ func Home() {
 		manageVoter()
 	case "3":
 	case "4":
+		manageElection()
 	case "q":
 		exit()
 	default:
