@@ -3,20 +3,20 @@ package model
 const NMAXCANDIDATE = 10
 
 type CandidateData struct {
-	CandidateNumber int
+	CandidateNumber     int
 	Name, VisionMission string
 }
 
-type Candidates struct {
-	Data [NMAXCANDIDATE]CandidateData
-	Length int 	
+type Canditates struct {
+	Data   [NMAXCANDIDATE]CandidateData
+	Length int
 }
 
-var Candidate Candidates
+var Candidate Canditates
 
-func GenerateCandidatesData () Candidates {
-	var data Candidates = Candidates{
-		Data : [NMAXCANDIDATE]CandidateData {
+func GenerateCandidatesData() Canditates {
+	var data Canditates = Canditates{
+		Data: [NMAXCANDIDATE]CandidateData{
 			{CandidateNumber: 1001, Name: "Budi", VisionMission: "MembangunekonomiIndonesialebihkuat"},
 			{CandidateNumber: 1002, Name: "Siti", VisionMission: "Meningkatkankualitaspendidikannasional"},
 			{CandidateNumber: 1003, Name: "Ahmad", VisionMission: "Menciptakanlapangankerjaseluasluasnya"},
