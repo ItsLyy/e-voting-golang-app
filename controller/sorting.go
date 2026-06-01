@@ -2,67 +2,74 @@ package controller
 
 import (
 	"e-voting/model"
+	"fmt"
 )
 
-func InsertionCandidateSorting(candidates model.Canditates, N int, sort string, sortBy string) model.Canditates {
-	var sortedCandidates model.Canditates = candidates
-	var temp model.Canditate
+func InsertionCandidateSorting(sort string, sortBy string) {
+	var candidate model.Canditates = model.Candidate
+	var temp model.CandidateData
 	var i int = 1
 
 	switch sort {
 	case "desc":
-		for i < N {
-			var j int = i
-			for j >= 0 && IsCandidateGreater(sortedCandidates[j], sortedCandidates[j-1], sortBy) {
-				temp=sortedCandidates[j]
-				sortedCandidates[j] = sortedCandidates[j-1]
-				sortedCandidates[j-1] = temp
+		for i < candidate.Length {
+			var j int = i - 1
+			temp = candidate.Data[i]
+
+			for j >= 0 && IsCandidateGreater(temp, candidate.Data[j], sortBy) {
+				candidate.Data[j+1] = candidate.Data[j]
 				j--
 			}
+
+			candidate.Data[j+1] = temp
 			i++
 		}
 	default:
-		for i < N {
-			var j int = i
-			for j >= 1 && IsCandidateLess(sortedCandidates[j], sortedCandidates[j-1], sortBy) {
-				temp=sortedCandidates[j]
-				sortedCandidates[j] = sortedCandidates[j-1]
-				sortedCandidates[j-1] = temp
+		for i < candidate.Length {
+			var j int = i - 1
+			temp = candidate.Data[i]
+
+			for j >= 0 && IsCandidateLess(temp, candidate.Data[j], sortBy) {
+				candidate.Data[j+1] = candidate.Data[j]
 				j--
 			}
+
+			candidate.Data[j+1] = temp
 			i++
 		}
 	}
-	return sortedCandidates
+
+	fmt.Println(candidate)
+	model.Candidate = candidate
 }
 
-func SelectionVotersSorting(voters model.Voters, N int, sort string, sortBy string) model.Voters {
-	var sortedVoters model.Voters = voters
-	var temp model.Voter
-	var i int = N - 1
+func SelectionVotersSorting(sort string, sortBy string) {
+	var voter model.Voters = model.Voter
+	var temp model.VoterData
+	var i int = voter.Length - 1
 
 	switch sort {
 	case "desc":
 		for i > 0 {
-			var j int = MinIndexVoter(sortedVoters, i, sortBy)
-	
-			temp = sortedVoters[j]
-			sortedVoters[j] = sortedVoters[i]
-			sortedVoters[i] = temp
-	
+			var j int = MinIndexVoter(voter, i, sortBy)
+
+			temp = voter.Data[j]
+			voter.Data[j] = voter.Data[i]
+			voter.Data[i] = temp
+
 			i--
 		}
 	default:
 		for i > 0 {
-			var j int = MaxIndexVoter(sortedVoters, i, sortBy)
-	
-			temp = sortedVoters[j]
-			sortedVoters[j] = sortedVoters[i]
-			sortedVoters[i] = temp
-	
+			var j int = MaxIndexVoter(voter, i, sortBy)
+
+			temp = voter.Data[j]
+			voter.Data[j] = voter.Data[i]
+			voter.Data[i] = temp
+
 			i--
 		}
 	}
 
-	return sortedVoters
+	model.Voter = voter
 }

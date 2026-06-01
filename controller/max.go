@@ -2,28 +2,28 @@ package controller
 
 import "e-voting/model"
 
-func MaxIndexVoter(voters model.Voters, N int, comparedBy string) int {
+func MaxIndexVoter(voter model.Voters, N int, comparedBy string) int {
 	var i int = 1
 	var maxIndex int = 0
 
 	switch comparedBy {
 	case "created":
 		for i <= N {
-			if voters[i].VoterId > voters[maxIndex].VoterId {
+			if voter.Data[i].VoterId > voter.Data[maxIndex].VoterId {
 				maxIndex = i
 			}
 			i++
 		}
 	case "candidate":
 		for i <= N {
-			if voters[i].CandidateNumber > voters[maxIndex].CandidateNumber {
+			if voter.Data[i].CandidateNumber > voter.Data[maxIndex].CandidateNumber {
 				maxIndex = i
 			}
 			i++
 		}
 	default:
 		for i <= N {
-			if voters[i].Name > voters[maxIndex].Name {
+			if voter.Data[i].Name > voter.Data[maxIndex].Name {
 				maxIndex = i
 			}
 			i++
@@ -33,7 +33,7 @@ func MaxIndexVoter(voters model.Voters, N int, comparedBy string) int {
 	return maxIndex
 }
 
-func IsVoterGreater(firstVoter model.Voter, secondVoter model.Voter, comparedBy string) bool {
+func IsVoterGreater(firstVoter model.VoterData, secondVoter model.VoterData, comparedBy string) bool {
 	switch comparedBy {
 	case "created":
 		return firstVoter.VoterId > secondVoter.VoterId
@@ -44,21 +44,21 @@ func IsVoterGreater(firstVoter model.Voter, secondVoter model.Voter, comparedBy 
 	}
 }
 
-func MaxIndexCandidate(candidates model.Canditates, N int, comparedBy string) int {
+func MaxIndexCandidate(candidate model.Canditates, N int, comparedBy string) int {
 	var i int = 1
 	var maxIndex int = 0
 
 	switch comparedBy {
 	case "created":
 		for i <= N {
-			if candidates[i].CandidateNumber > candidates[maxIndex].CandidateNumber {
+			if candidate.Data[i].CandidateNumber > candidate.Data[maxIndex].CandidateNumber {
 				maxIndex = i
 			}
 			i++
 		}
 	default:
 		for i <= N {
-			if candidates[i].Name > candidates[maxIndex].Name {
+			if candidate.Data[i].Name > candidate.Data[maxIndex].Name {
 				maxIndex = i
 			}
 			i++
@@ -68,7 +68,7 @@ func MaxIndexCandidate(candidates model.Canditates, N int, comparedBy string) in
 	return maxIndex
 }
 
-func IsCandidateGreater(firstCandidate model.Canditate, secondCandidate model.Canditate, comparedBy string) bool {
+func IsCandidateGreater(firstCandidate model.CandidateData, secondCandidate model.CandidateData, comparedBy string) bool {
 	switch comparedBy {
 	case "created":
 		return firstCandidate.CandidateNumber > secondCandidate.CandidateNumber
