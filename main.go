@@ -8,6 +8,5 @@ import (
 func main() {
 	model.Candidate = model.GenerateCandidatesData()
 	model.Voter = model.GenerateVotersData()
-	// view.Home()
 	controller.InsertionCandidateSorting("desc", "name")
 }

@@ -44,7 +44,7 @@ func IsVoterGreater(firstVoter model.VoterData, secondVoter model.VoterData, com
 	}
 }
 
-func MaxIndexCandidate(candidate model.Canditates, N int, comparedBy string) int {
+func MaxIndexCandidate(candidate model.Candidates, N int, comparedBy string) int {
 	var i int = 1
 	var maxIndex int = 0
 

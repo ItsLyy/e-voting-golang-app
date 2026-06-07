@@ -6,7 +6,7 @@ import (
 )
 
 func InsertionCandidateSorting(sort string, sortBy string) {
-	var candidate model.Canditates = model.Candidate
+	var candidate model.Candidates = model.Candidate
 	var temp model.CandidateData
 	var i int = 1
 

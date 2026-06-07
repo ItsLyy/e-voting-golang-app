@@ -7,15 +7,15 @@ type CandidateData struct {
 	Name, VisionMission string
 }
 
-type Canditates struct {
+type Candidates struct {
 	Data   [NMAXCANDIDATE]CandidateData
 	Length int
 }
 
-var Candidate Canditates
+var Candidate Candidates
 
-func GenerateCandidatesData() Canditates {
-	var data Canditates = Canditates{
+func GenerateCandidatesData() Candidates {
+	var data Candidates = Candidates{
 		Data: [NMAXCANDIDATE]CandidateData{
 			{CandidateNumber: 1001, Name: "Budi", VisionMission: "MembangunekonomiIndonesialebihkuat"},
 			{CandidateNumber: 1002, Name: "Siti", VisionMission: "Meningkatkankualitaspendidikannasional"},
