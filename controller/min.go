@@ -44,7 +44,7 @@ func IsVoterLess(firstVoter model.VoterData, secondVoter model.VoterData, compar
 	}
 }
 
-func MinIndexCandidate(candidate model.Canditates, N int, comparedBy string) int {
+func MinIndexCandidate(candidate model.Candidates, N int, comparedBy string) int {
 	var i int = 1
 	var minIndex int = 0
 
