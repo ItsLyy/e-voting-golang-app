@@ -24,6 +24,7 @@ func Home() {
 
 	switch choice {
 	case "1":
+		ManageCandidates()
 	case "2":
 		manageVoter()
 	case "3":

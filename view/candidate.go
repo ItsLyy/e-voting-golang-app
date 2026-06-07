@@ -60,8 +60,10 @@ func ViewAllCandidate() {
 	fmt.Scan(&choice)
 	switch choice {
 	case "1" :
+		SearchCandidate()
 		
 	case "2" :
+		SortCandidate()
 		
 	case "b" : 
 		ManageCandidates()
@@ -119,14 +121,6 @@ func DeleteCandidate() {
 
 }
 
-func normalLine() string {
-	return "-----------------------------\n=============================\n"
-}
-
-func tableLine() string {
-	return "--------------------------------------------------------------------------------------------------------------------\n====================================================================================================================\n"
-}
-
 func SearchCandidate() {
 	var choice ,searchBY,target string
 
@@ -152,7 +146,7 @@ func SearchCandidate() {
 
 }
 
-func SortVoters() {
+func SortCandidate() {
 	var choice, sortBy, sorting string
 
 	fmt.Println("[i] ID ")
@@ -166,7 +160,7 @@ func SortVoters() {
 		sortBy = "name"
 	default :
 		fmt.Println("wrong choice! try again")
-		SortVoters()
+		SortCandidate()
 	}
 	fmt.Print("Sort By: ")
 	fmt.Scan(&sortBy)
