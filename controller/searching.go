@@ -3,17 +3,19 @@ package controller
 import "e-voting/model"
 
 /**
- * Sequeential Search Section
+ * Sequential Search Section
  */
 
 func SearchSequentialCandidateByName(name string) int {
 	var index int = -1
-	var i int
+	var i int = 0
 
-	for i = 0; i < model.Candidate.Length; i++ {
+	for i < model.Candidate.Length && index == -1 {
 		if model.Candidate.Data[i].Name == name {
 			index = i
 		}
+
+		i++
 	}
 
 	return index
@@ -21,12 +23,14 @@ func SearchSequentialCandidateByName(name string) int {
 
 func SearchSequentialCandidateByCandidateNumber(candidateNumber int) int {
 	var index int = -1
-	var i int
+	var i int = 0
 
-	for i = 0; i < model.Candidate.Length; i++ {
+	for i < model.Candidate.Length && index == -1 {
 		if model.Candidate.Data[i].CandidateNumber == candidateNumber {
 			index = i
 		}
+
+		i++
 	}
 
 	return index
@@ -34,12 +38,13 @@ func SearchSequentialCandidateByCandidateNumber(candidateNumber int) int {
 
 func SearchSequentialVoterByName(name string) int {
 	var index int = -1
-	var i int
+	var i int = 0
 
-	for i = 0; i < model.Voter.Length; i++ {
+	for i < model.Voter.Length && index == -1 {
 		if model.Voter.Data[i].Name == name {
 			index = i
 		}
+		i++
 	}
 
 	return index
@@ -47,12 +52,13 @@ func SearchSequentialVoterByName(name string) int {
 
 func SearchSequentialVoterById(id int) int {
 	var index int = -1
-	var i int
+	var i int = 0
 
-	for i = 0; i < model.Voter.Length; i++ {
+	for i < model.Voter.Length && index == -1 {
 		if model.Voter.Data[i].VoterId == id {
 			index = i
 		}
+		i++
 	}
 
 	return index
@@ -60,6 +66,7 @@ func SearchSequentialVoterById(id int) int {
 
 /**
  * Binary Search Section
+ * Note: Must be sorted before searching
  */
 func SearchBinaryCandidateByName(name string, sort string) int {
 	var left int = 0
