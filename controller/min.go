@@ -7,7 +7,7 @@ func MinIndexVoter(voter model.Voters, N int, comparedBy string) int {
 	var minIndex int = 0
 
 	switch comparedBy {
-	case "created":
+	case "id":
 		for i <= N {
 			if voter.Data[i].VoterId < voter.Data[minIndex].VoterId {
 				minIndex = i
@@ -35,7 +35,7 @@ func MinIndexVoter(voter model.Voters, N int, comparedBy string) int {
 
 func IsVoterLess(firstVoter model.VoterData, secondVoter model.VoterData, comparedBy string) bool {
 	switch comparedBy {
-	case "created":
+	case "id":
 		return firstVoter.VoterId < secondVoter.VoterId
 	case "candidate":
 		return firstVoter.CandidateNumber < secondVoter.CandidateNumber
@@ -49,7 +49,7 @@ func MinIndexCandidate(candidate model.Candidates, N int, comparedBy string) int
 	var minIndex int = 0
 
 	switch comparedBy {
-	case "created":
+	case "id":
 		for i <= N {
 			if candidate.Data[i].CandidateNumber < candidate.Data[minIndex].CandidateNumber {
 				minIndex = i

@@ -7,7 +7,7 @@ func MaxIndexVoter(voter model.Voters, N int, comparedBy string) int {
 	var maxIndex int = 0
 
 	switch comparedBy {
-	case "created":
+	case "id":
 		for i <= N {
 			if voter.Data[i].VoterId > voter.Data[maxIndex].VoterId {
 				maxIndex = i
@@ -35,7 +35,7 @@ func MaxIndexVoter(voter model.Voters, N int, comparedBy string) int {
 
 func IsVoterGreater(firstVoter model.VoterData, secondVoter model.VoterData, comparedBy string) bool {
 	switch comparedBy {
-	case "created":
+	case "id":
 		return firstVoter.VoterId > secondVoter.VoterId
 	case "candidate":
 		return firstVoter.CandidateNumber > secondVoter.CandidateNumber
@@ -49,7 +49,7 @@ func MaxIndexCandidate(candidate model.Candidates, N int, comparedBy string) int
 	var maxIndex int = 0
 
 	switch comparedBy {
-	case "created":
+	case "id":
 		for i <= N {
 			if candidate.Data[i].CandidateNumber > candidate.Data[maxIndex].CandidateNumber {
 				maxIndex = i
@@ -70,7 +70,7 @@ func MaxIndexCandidate(candidate model.Candidates, N int, comparedBy string) int
 
 func IsCandidateGreater(firstCandidate model.CandidateData, secondCandidate model.CandidateData, comparedBy string) bool {
 	switch comparedBy {
-	case "created":
+	case "id":
 		return firstCandidate.CandidateNumber > secondCandidate.CandidateNumber
 	default:
 		return firstCandidate.Name > secondCandidate.Name
