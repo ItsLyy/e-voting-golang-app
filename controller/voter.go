@@ -95,6 +95,15 @@ func UpdateVoter(id int, voter model.VoterData, voterSetting model.DataSetting) 
 	return Response{Success: true, Message: "voter updated successfully"}
 }
 
+func ShowVoter(id int, voterSetting model.DataSetting) Response {
+	var index = optimizationVoterIdSearchIndex(id, voterSetting)
+	if index == -1 {
+		return Response{Success: false, Message: "voter not found"}
+	}
+
+	return Response{Success: true, Message: "voter found", Data: model.Voter.Data[index]}
+}
+
 func optimizationVoterIdSearchIndex(id int, voterSetting model.DataSetting) int {
 	var index = -1
 	if (voterSetting.SortOrder == "asc" || voterSetting.SortOrder == "desc") && voterSetting.SortBy == "id" {

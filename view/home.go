@@ -1,11 +1,20 @@
 package view
 
 import (
+	"e-voting/model"
 	"fmt"
 )
 
 func Home() {
 	var choice string
+
+	var voterSetting model.DataSetting
+	var candidateSetting model.DataSetting
+
+	voterSetting.SortBy = ""
+	voterSetting.SortOrder = ""
+	candidateSetting.SortBy = ""
+	candidateSetting.SortOrder = ""
 
 	fmt.Println()
 	fmt.Print(normalLine())
@@ -26,7 +35,7 @@ func Home() {
 	case "1":
 		ManageCandidates()
 	case "2":
-		manageVoter()
+		manageVoter(&voterSetting)
 	case "3":
 	case "4":
 		manageElection()
