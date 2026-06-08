@@ -95,6 +95,17 @@ func UpdateVoter(id int, voter model.VoterData, voterSetting model.DataSetting) 
 	return Response{Success: true, Message: "voter updated successfully"}
 }
 
+func CastingVoteVoter(id int, candidateId int, voterSetting model.DataSetting) Response {
+	var index = optimizationVoterIdSearchIndex(id, voterSetting)
+
+	if index == -1 {
+		return Response{Success: false, Message: "voter not found"}
+	}
+
+	model.Voter.Data[index].CandidateNumber = candidateId
+	return Response{Success: true, Message: "Voter voted successfully"}
+}
+
 func ShowVoterById(id int, voterSetting model.DataSetting) Response {
 	var index = optimizationVoterIdSearchIndex(id, voterSetting)
 	if index == -1 {

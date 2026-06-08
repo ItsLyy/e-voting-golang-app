@@ -37,6 +37,7 @@ func Home() {
 	case "2":
 		manageVoter(&voterSetting)
 	case "3":
+		castingVote(&voterSetting)
 	case "4":
 		manageElection()
 	case "q":

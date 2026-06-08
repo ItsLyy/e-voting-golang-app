@@ -264,3 +264,23 @@ func sortVoters(voterSetting *model.DataSetting) {
 
 	viewAllVoters(voterSetting)
 }
+
+func castingVote(voterSetting *model.DataSetting) {
+	displayTableVoter()
+	fmt.Println()
+
+	var voterId, candidateId int
+	fmt.Print("Select Voter's ID: ")
+	fmt.Scan(&voterId)
+
+	fmt.Println()
+	displayTableCandidate()
+	fmt.Println()
+	fmt.Print("Select Candidate's ID: ")
+	fmt.Scan(&candidateId)
+
+	var res controller.Response = controller.CastingVoteVoter(voterId, candidateId, *voterSetting)
+	fmt.Println(res.Message)
+	fmt.Println()
+	manageVoter(voterSetting)
+}
