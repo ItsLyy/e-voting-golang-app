@@ -147,7 +147,7 @@ func searchVoters(voterSetting *model.DataSetting) {
 
 	fmt.Print("[i] ID  ")
 	fmt.Print("[n] Name  ")
-	fmt.Print("[c] Choosen Candidate  \n")
+	fmt.Println()
 	fmt.Print("Search By: ")
 	fmt.Scan(&choice)
 	fmt.Print("Search: ")
@@ -156,9 +156,12 @@ func searchVoters(voterSetting *model.DataSetting) {
 		var id int
 		fmt.Scan(&id)
 
-		res = controller.ShowVoter(id, *voterSetting)
+		res = controller.ShowVoterById(id, *voterSetting)
 	case "n":
-	case "c":
+		var name string
+		fmt.Scan(&name)
+
+		res = controller.ShowVoterByName(name, *voterSetting)
 	default:
 		fmt.Println("Wrong choice! try again")
 		searchVoters(voterSetting)
@@ -170,18 +173,57 @@ func searchVoters(voterSetting *model.DataSetting) {
 	} else {
 		var data model.VoterData
 		data = res.Data.(model.VoterData)
-		displayVoter(data)
+		displayVoter(data, voterSetting)
 	}
 
 	viewAllVoters(voterSetting)
 }
 
-func displayVoter(data model.VoterData) {
+func displayVoter(data model.VoterData, voterSetting *model.DataSetting) {
 	fmt.Println()
-	fmt.Printf("%-10s %-10s %-10s\n", "Voter ID", "Candidate Number", "Name")
-	fmt.Printf("%-10d %-10d %-10s\n", data.VoterId, data.CandidateNumber, data.Name)
+	fmt.Printf("%-10s%-18s%-18s\n", "Voter ID", "Candidate Number", "Name")
+	fmt.Printf("%-10d%-18d%-18s\n", data.VoterId, data.CandidateNumber, data.Name)
 	fmt.Println()
 	fmt.Println("1. Change name\n2. Delete voter\n3. Return to voter list")
+
+	fmt.Println()
+	var choice string
+	inputChoice(&choice)
+	switch choice {
+	case "1":
+		changeNameVoter(data, voterSetting)
+	case "2":
+		deleteDataVoterDetail(data, voterSetting)
+	case "3":
+		viewAllVoters(voterSetting)
+	}
+}
+
+func deleteDataVoterDetail(data model.VoterData, voterSetting *model.DataSetting) {
+	var choice string
+	confirmation(&choice)
+	switch choice {
+	case "Y", "y":
+		var res controller.Response = controller.DeleteVoter(data.VoterId, *voterSetting)
+		if res.Success {
+			fmt.Printf("\n%d has successfully deleted to the data!\n", data.VoterId)
+		} else {
+			fmt.Println("ID not found! try again,")
+			deleteVoter(voterSetting)
+		}
+	case "n", "N":
+		viewAllVoters(voterSetting)
+	}
+}
+
+func changeNameVoter(data model.VoterData, voterSetting *model.DataSetting) {
+	var id int = data.VoterId
+	fmt.Print("Enter new name: ")
+	fmt.Scan(&data.Name)
+
+	var res controller.Response = controller.UpdateVoter(id, data, *voterSetting)
+	fmt.Println(res.Message)
+	displayVoter(data, voterSetting)
 }
 
 func sortVoters(voterSetting *model.DataSetting) {
