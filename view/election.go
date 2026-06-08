@@ -62,7 +62,7 @@ func viewElectionResults() {
 	case "1":
 		sortElectionResults()
 	case "b":
-		manageVoter()
+		// manageVoter()
 	case "q":
 		exit()
 	default:
@@ -86,7 +86,7 @@ func sortElectionResults() {
 		sortBy = "candidate"
 	default:
 		fmt.Println("Wrong choice! try again")
-		sortVoters()
+		// sortVoters()
 	}
 	fmt.Print("Sort By: ")
 	fmt.Scan(&sortBy)
@@ -95,7 +95,7 @@ func sortElectionResults() {
 
 	fmt.Println()
 
-	viewAllVoters()
+	// viewAllVoters()
 }
 
 func resetElection() {

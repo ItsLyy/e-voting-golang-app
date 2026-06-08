@@ -2,17 +2,12 @@ package main
 
 import (
 	"e-voting/model"
+	"e-voting/view"
 )
 
 func main() {
 	model.Candidate = model.GenerateCandidatesData()
 	model.Voter = model.GenerateVotersData()
 
-	var voterSetting model.DataSetting
-	var candidateSetting model.DataSetting
-
-	voterSetting.SortBy = ""
-	voterSetting.SortOrder = ""
-	candidateSetting.SortBy = ""
-	candidateSetting.SortOrder = ""
+	view.Home()
 }
