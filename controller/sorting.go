@@ -80,7 +80,7 @@ func InsertionVotersSorting(sort string, sortBy string) {
 	var i int = 1
 
 	switch sort {
-	case "desc" :
+	case "desc":
 		for i < voter.Length {
 			var j int = i - 1
 			temp = voter.Data[i]
@@ -91,9 +91,9 @@ func InsertionVotersSorting(sort string, sortBy string) {
 			}
 
 			voter.Data[j+1] = temp
-			i++ 
+			i++
 		}
-	default :
+	default:
 		for i < voter.Length {
 			var j int = i - 1
 			temp = voter.Data[i]
@@ -113,7 +113,7 @@ func InsertionVotersSorting(sort string, sortBy string) {
 }
 
 func SelectionCandidateSorting(sort string, sortBy string) {
-	var candidate model.Canditates = model.Candidate
+	var candidate model.Candidates = model.Candidate
 	var temp model.CandidateData
 	var i int = candidate.Length - 1
 
