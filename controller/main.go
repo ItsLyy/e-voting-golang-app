@@ -1,6 +1,6 @@
 package controller
 
-type response struct {
-	success bool
-	message string
+type Response struct {
+	Success bool
+	Message string
 }

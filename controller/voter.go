@@ -2,15 +2,15 @@ package controller
 
 import "e-voting/model"
 
-func CreateVoter(voter model.VoterData, voterSetting model.DataSetting) response {
+func CreateVoter(voter model.VoterData, voterSetting model.DataSetting) Response {
 	if voter.VoterId == 0 || voter.Name == "" {
-		return response{success: false, message: "invalid voter data"}
+		return Response{Success: false, Message: "invalid voter data"}
 	}
 
-	var index = optimazitaionVoterIdSearchIndex(voter.VoterId, voterSetting)
+	var index = optimizationVoterIdSearchIndex(voter.VoterId, voterSetting)
 
 	if index != -1 {
-		return response{success: false, message: "voter already exists"}
+		return Response{Success: false, Message: "voter already exists"}
 	}
 
 	var i int = model.Voter.Length - 1
@@ -63,14 +63,14 @@ func CreateVoter(voter model.VoterData, voterSetting model.DataSetting) response
 	}
 
 	model.Voter.Length++
-	return response{success: true, message: "voter created successfully"}
+	return Response{Success: true, Message: "voter created successfully"}
 }
 
-func DeleteVoter(id int, voterSetting model.DataSetting) response {
-	var index = optimazitaionVoterIdSearchIndex(id, voterSetting)
+func DeleteVoter(id int, voterSetting model.DataSetting) Response {
+	var index = optimizationVoterIdSearchIndex(id, voterSetting)
 
 	if index == -1 {
-		return response{success: false, message: "voter not found"}
+		return Response{Success: false, Message: "voter not found"}
 	}
 
 	model.Voter.Data[index] = model.VoterData{}
@@ -81,21 +81,21 @@ func DeleteVoter(id int, voterSetting model.DataSetting) response {
 
 	model.Voter.Length--
 
-	return response{success: true, message: "voter deleted successfully"}
+	return Response{Success: true, Message: "voter deleted successfully"}
 }
 
-func UpdateVoter(id int, voter model.VoterData, voterSetting model.DataSetting) response {
-	var index = optimazitaionVoterIdSearchIndex(id, voterSetting)
+func UpdateVoter(id int, voter model.VoterData, voterSetting model.DataSetting) Response {
+	var index = optimizationVoterIdSearchIndex(id, voterSetting)
 
 	if index == -1 {
-		return response{success: false, message: "voter not found"}
+		return Response{Success: false, Message: "voter not found"}
 	}
 
 	model.Voter.Data[index] = voter
-	return response{success: true, message: "voter updated successfully"}
+	return Response{Success: true, Message: "voter updated successfully"}
 }
 
-func optimazitaionVoterIdSearchIndex(id int, voterSetting model.DataSetting) int {
+func optimizationVoterIdSearchIndex(id int, voterSetting model.DataSetting) int {
 	var index = -1
 	if (voterSetting.SortOrder == "asc" || voterSetting.SortOrder == "desc") && voterSetting.SortBy == "id" {
 		index = SearchBinaryVoterById(id, voterSetting.SortOrder)
