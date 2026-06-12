@@ -13,8 +13,12 @@ func Home() {
 
 	voterSetting.SortBy = ""
 	voterSetting.SortOrder = ""
+	voterSetting.SortSetting = "sequential"
+	voterSetting.SearchSetting = "binary"
 	candidateSetting.SortBy = ""
 	candidateSetting.SortOrder = ""
+	candidateSetting.SortSetting = "sequential"
+	candidateSetting.SearchSetting = "binary"
 
 	fmt.Println()
 	fmt.Print(normalLine())
@@ -25,6 +29,7 @@ func Home() {
 	fmt.Println("3. Voting")
 	fmt.Println("4. Election Management")
 	fmt.Println()
+	fmt.Println("s. Settings")
 	fmt.Println("q. Quit App")
 	fmt.Print(normalLine())
 	inputChoice(&choice)
@@ -42,6 +47,8 @@ func Home() {
 		manageElection()
 	case "q":
 		exit()
+	case "s":
+		settingMenu(&candidateSetting, &voterSetting)
 	default:
 		wrong(choice)
 		Home()
