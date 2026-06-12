@@ -123,7 +123,6 @@ func deleteVoter(voterSetting *model.DataSetting) {
 	fmt.Print("\n", normalLine())
 	switch choice {
 	case "Y", "y":
-		// [Controller] -> Delete Voters
 		var res controller.Response = controller.DeleteVoter(id, *voterSetting)
 		if res.Success {
 			fmt.Printf("\n%d has successfully deleted to the data!\n", id)
@@ -260,7 +259,11 @@ func sortVoters(voterSetting *model.DataSetting) {
 
 	fmt.Println()
 
-	controller.SelectionVotersSorting(voterSetting.SortOrder, voterSetting.SortBy)
+	if voterSetting.SortSetting == "selection" {
+		controller.SelectionVotersSorting(voterSetting.SortOrder, voterSetting.SortBy)
+	} else if voterSetting.SortSetting == "insertion" {
+		controller.InsertionVotersSorting(voterSetting.SortOrder, voterSetting.SortBy)
+	}
 
 	viewAllVoters(voterSetting)
 }

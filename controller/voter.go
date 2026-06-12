@@ -126,7 +126,7 @@ func ShowVoterByName(name string, voterSetting model.DataSetting) Response {
 
 func optimizationVoterIdSearchIndex(id int, voterSetting model.DataSetting) int {
 	var index = -1
-	if (voterSetting.SortOrder == "asc" || voterSetting.SortOrder == "desc") && voterSetting.SortBy == "id" {
+	if (voterSetting.SortOrder == "asc" || voterSetting.SortOrder == "desc") && voterSetting.SortBy == "id" && voterSetting.SortSetting == "binary" {
 		index = SearchBinaryVoterById(id, voterSetting.SortOrder)
 	} else {
 		index = SearchSequentialVoterById(id)
@@ -137,7 +137,7 @@ func optimizationVoterIdSearchIndex(id int, voterSetting model.DataSetting) int 
 
 func optimizationVoterNameSearchIndex(name string, voterSetting model.DataSetting) int {
 	var index = -1
-	if (voterSetting.SortOrder == "asc" || voterSetting.SortOrder == "desc") && voterSetting.SortBy == "name" {
+	if (voterSetting.SortOrder == "asc" || voterSetting.SortOrder == "desc") && voterSetting.SortBy == "name" && voterSetting.SortSetting == "binary" {
 		index = SearchBinaryVoterByName(name, voterSetting.SortOrder)
 	} else {
 		index = SearchSequentialVoterByName(name)

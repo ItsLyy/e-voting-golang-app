@@ -1,6 +1,7 @@
 package view
 
 import (
+	"e-voting/controller"
 	"e-voting/model"
 	"fmt"
 )
@@ -37,13 +38,16 @@ func manageElection() {
 
 func displayTableElectionResults() {
 	var i int = 0
+	var election model.Elections = controller.InputElection()
+	var totalVotes int = controller.SumVotes(election)
 
 	fmt.Print(tableLine())
 	fmt.Printf("|%-80s|%-20s|%-13s|\n", "Name", "Persentage(%)", "Total Voted")
 	fmt.Print(tableLine())
 
-	for i < model.Candidate.Length {
-		fmt.Printf("|%-80s|%-20.2f|%-13d|\n", model.Candidate.Data[i].Name, 20.02, 10)
+	for i < election.Length {
+		var candidateIndex = election.Data[i].CandidateIndex
+		fmt.Printf("|%-80s|%-20.2f|%-13d|\n", model.Candidate.Data[candidateIndex].Name, controller.CalculatePercentage(totalVotes, election.Data[i].TotalVote), election.Data[i].TotalVote)
 		i++
 	}
 	fmt.Print(tableLine())
@@ -51,51 +55,23 @@ func displayTableElectionResults() {
 
 func viewElectionResults() {
 	var choice string
+
 	displayTableElectionResults()
-	fmt.Printf("%-30s%-30s%-30s\n", "1: Sorting", "b: Back", "q: Quit")
+	fmt.Printf("%-30s%-30s\n", "b: Back", "q: Quit")
 	fmt.Println() // Upcoming
 
 	inputChoice(&choice)
 	fmt.Println()
 
 	switch choice {
-	case "1":
-		sortElectionResults()
 	case "b":
-		// manageVoter()
+		manageElection()
 	case "q":
 		exit()
 	default:
 		wrong(choice)
 		inputChoice(&choice)
 	}
-}
-
-func sortElectionResults() {
-	var choice, sortBy, sorting string
-
-	fmt.Print("[i] ID  ")
-	fmt.Print("[n] Name  ")
-	fmt.Print("[c] Choosen Candidate  \n")
-	switch choice {
-	case "i":
-		sortBy = "created"
-	case "n":
-		sortBy = "name"
-	case "c":
-		sortBy = "candidate"
-	default:
-		fmt.Println("Wrong choice! try again")
-		// sortVoters()
-	}
-	fmt.Print("Sort By: ")
-	fmt.Scan(&sortBy)
-	fmt.Print("Sorting [a] Ascending [d] Descending: ")
-	fmt.Scan(&sorting)
-
-	fmt.Println()
-
-	// viewAllVoters()
 }
 
 func resetElection() {
@@ -107,7 +83,7 @@ func resetElection() {
 
 	switch choice {
 	case "Y", "y":
-		// TODO: Reset election from controller
+		controller.ResetElection()
 		manageElection()
 	case "n", "N":
 		manageElection()
