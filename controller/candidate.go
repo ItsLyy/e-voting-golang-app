@@ -105,3 +105,32 @@ func optimizationCandidateSearchIndex(candidateNumber int, candidateSetting mode
 
 	return index
 }
+
+func ShowCandidateById(id int, candidateSetting model.DataSetting) Response {
+	var index = optimizationCandidateSearchIndex(id, candidateSetting)
+	if index == -1 {
+		return Response{Success: false, Message: "candidate not found"}
+	}
+
+	return Response{Success: true, Message: "candidate found", Data: model.Candidate.Data[index]}
+}
+
+func ShowCandidateByName(name string, candidateSetting model.DataSetting) Response {
+	var index = optimizationCandidateNameSearchIndex(name, candidateSetting)
+	if index == -1 {
+		return Response{Success: false, Message: "candidate not found"}
+	}
+
+	return Response{Success: true, Message: "candidate found", Data: model.Candidate.Data[index]}
+}
+
+func optimizationCandidateNameSearchIndex(name string, candidateSetting model.DataSetting) int {
+	var index = -1
+	if (candidateSetting.SortOrder == "asc" || candidateSetting.SortOrder == "desc") && candidateSetting.SortBy == "name" {
+		index = SearchBinaryVoterByName(name, candidateSetting.SortOrder)
+	} else {
+		index = SearchSequentialVoterByName(name)
+	}
+
+	return index
+}

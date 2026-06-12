@@ -33,7 +33,7 @@ func Home() {
 
 	switch choice {
 	case "1":
-		ManageCandidates()
+		ManageCandidates(&candidateSetting)
 	case "2":
 		manageVoter(&voterSetting)
 	case "3":

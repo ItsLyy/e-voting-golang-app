@@ -1,6 +1,6 @@
 package model
 
-const NMAXCANDIDATE = 10
+const NMAXCANDIDATE = 100
 
 type CandidateData struct {
 	CandidateNumber     int
