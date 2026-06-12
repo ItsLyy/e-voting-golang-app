@@ -34,12 +34,14 @@ func settingMenu(candidateSettings, voterSettings *model.DataSetting) {
 	case "4":
 		dataSearchingMenu(voterSettings)
 	case "b":
-		Home()
+		Home(candidateSettings, voterSettings)
 	case "q":
 		exit()
 	default:
 		settingMenu(candidateSettings, voterSettings)
 	}
+
+	Home(candidateSettings, voterSettings)
 }
 
 func dataSortingMenu(dataSetting *model.DataSetting) {
@@ -75,7 +77,6 @@ func dataSortingMenu(dataSetting *model.DataSetting) {
 	fmt.Println()
 	fmt.Println("Sorting setting updated:", dataSetting.SortSetting)
 	fmt.Println()
-	Home()
 }
 
 func dataSearchingMenu(dataSetting *model.DataSetting) {
@@ -111,5 +112,4 @@ func dataSearchingMenu(dataSetting *model.DataSetting) {
 	fmt.Println()
 	fmt.Println("Searching setting updated:", dataSetting.SearchSetting)
 	fmt.Println()
-	Home()
 }
