@@ -6,6 +6,11 @@ import (
 	"fmt"
 )
 
+/*
+ * manageCandidates displays the candidate management submenu.
+ * Purpose: Let the user view, add, or delete candidates.
+ * Flow: Show submenu -> read choice -> route to the selected action or go back home.
+ */
 func manageCandidates(candidateSetting, voterSetting *model.DataSetting) {
 	var choose string
 	fmt.Print(normalLine())
@@ -39,6 +44,11 @@ func manageCandidates(candidateSetting, voterSetting *model.DataSetting) {
 	}
 }
 
+/*
+ * displayTableCandidate prints all candidates in a formatted table.
+ * Purpose: Show candidate number, name, and vision mission in the console.
+ * Flow: Print table header -> loop each candidate and join vision mission words -> print rows.
+ */
 func displayTableCandidate() {
 	var i int = 0
 	fmt.Print(tableLine())
@@ -59,6 +69,11 @@ func displayTableCandidate() {
 
 }
 
+/*
+ * viewAllCandidate shows the candidate list with search and sort options.
+ * Purpose: Display all candidates and let the user search, sort, go back, or quit.
+ * Flow: Print candidate table -> show action menu -> route to search, sort, or navigation.
+ */
 func viewAllCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 	fmt.Println("kamu sedang berada di ViewAllCandidate")
@@ -83,6 +98,11 @@ func viewAllCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	}
 }
 
+/*
+ * addCandidate handles the form to create a new candidate.
+ * Purpose: Collect candidate details from the user and save them via the controller.
+ * Flow: Read number, name, and vision mission words -> confirm -> call CreateCandidate -> return to menu.
+ */
 func addCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 	var candidate model.CandidateData
@@ -126,6 +146,11 @@ func addCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	manageCandidates(candidateSetting, voterSetting)
 }
 
+/*
+ * deleteCandidate handles removing a candidate by ID.
+ * Purpose: Let the user pick a candidate to delete with confirmation.
+ * Flow: Show table -> read ID -> confirm -> call DeleteCandidate -> return to menu.
+ */
 func deleteCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 	var id int
@@ -155,6 +180,11 @@ func deleteCandidate(candidateSetting, voterSetting *model.DataSetting) {
 
 }
 
+/*
+ * searchCandidate finds and displays a single candidate.
+ * Purpose: Let the user search by ID or name and view the result.
+ * Flow: Choose search field -> read value -> call ShowCandidateById or ShowCandidateByName -> display result or retry.
+ */
 func searchCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 	var res controller.Response
@@ -193,6 +223,11 @@ func searchCandidate(candidateSetting, voterSetting *model.DataSetting) {
 
 }
 
+/*
+ * displayCandidate shows one candidate's details with edit options.
+ * Purpose: Let the user view and modify a single candidate after searching.
+ * Flow: Print candidate info -> show edit menu -> route to change name, vision mission, delete, or go back.
+ */
 func displayCandidate(data model.CandidateData, candidateSetting, voterSetting *model.DataSetting) {
 	fmt.Println()
 	fmt.Printf("%-10s%-18s%-60s\n", "Number", "Name", "Vision Mission")
@@ -220,6 +255,11 @@ func displayCandidate(data model.CandidateData, candidateSetting, voterSetting *
 	}
 }
 
+/*
+ * changeNameCandidate updates a candidate's name.
+ * Purpose: Let the user rename a candidate from the detail view.
+ * Flow: Read new name -> call UpdateCandidate -> show updated detail view.
+ */
 func changeNameCandidate(data model.CandidateData, candidateSetting, voterSetting *model.DataSetting) {
 	var id int = data.CandidateNumber
 	fmt.Print("Enter new name: ")
@@ -230,6 +270,11 @@ func changeNameCandidate(data model.CandidateData, candidateSetting, voterSettin
 	displayCandidate(data, candidateSetting, voterSetting)
 }
 
+/*
+ * changeVisionMissionCandidate updates a candidate's vision mission.
+ * Purpose: Let the user replace the vision mission words from the detail view.
+ * Flow: Read new words until STOP -> call UpdateCandidate -> show updated detail view.
+ */
 func changeVisionMissionCandidate(data model.CandidateData, candidateSetting, voterSetting *model.DataSetting) {
 	var word string
 	fmt.Print("Enter new vision mission: ")
@@ -249,6 +294,11 @@ func changeVisionMissionCandidate(data model.CandidateData, candidateSetting, vo
 	displayCandidate(data, candidateSetting, voterSetting)
 }
 
+/*
+ * deleteDataCandidateDetail removes a candidate from the detail view.
+ * Purpose: Let the user delete a candidate after viewing their details.
+ * Flow: Confirm action -> call DeleteCandidate -> show result or return to list.
+ */
 func deleteDataCandidateDetail(data model.CandidateData, candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 	confirmation(&choice)
@@ -266,6 +316,11 @@ func deleteDataCandidateDetail(data model.CandidateData, candidateSetting, voter
 	}
 }
 
+/*
+ * sortCandidate configures and runs candidate sorting.
+ * Purpose: Let the user choose sort field and order, then reorder the candidate list.
+ * Flow: Choose sort by (ID/name) -> choose order (asc/desc) -> call SelectionCandidateSorting -> return to list.
+ */
 func sortCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 

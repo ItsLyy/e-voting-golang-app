@@ -5,6 +5,11 @@ import (
 	"fmt"
 )
 
+/*
+ * InsertionCandidateSorting sorts candidates using insertion sort.
+ * Purpose: Reorder the candidate list by ID or name in ascending or descending order.
+ * Flow: Copy candidate data -> for each element, shift larger/smaller items and insert -> save back to model.
+ */
 func InsertionCandidateSorting(sort string, sortBy string) {
 	var candidate model.Candidates = model.Candidate
 	var temp model.CandidateData
@@ -43,6 +48,11 @@ func InsertionCandidateSorting(sort string, sortBy string) {
 	model.Candidate = candidate
 }
 
+/*
+ * SelectionVotersSorting sorts voters using selection sort.
+ * Purpose: Reorder the voter list by ID, name, or chosen candidate in ascending or descending order.
+ * Flow: Copy voter data -> find min/max index in unsorted portion -> swap with end position -> repeat -> save back to model.
+ */
 func SelectionVotersSorting(sort string, sortBy string) {
 	var voter model.Voters = model.Voter
 	var temp model.VoterData
@@ -74,6 +84,11 @@ func SelectionVotersSorting(sort string, sortBy string) {
 	model.Voter = voter
 }
 
+/*
+ * InsertionVotersSorting sorts voters using insertion sort.
+ * Purpose: Reorder the voter list by ID, name, or chosen candidate in ascending or descending order.
+ * Flow: Copy voter data -> for each element, shift larger/smaller items and insert -> save back to model.
+ */
 func InsertionVotersSorting(sort string, sortBy string) {
 	var voter model.Voters = model.Voter
 	var temp model.VoterData
@@ -112,6 +127,11 @@ func InsertionVotersSorting(sort string, sortBy string) {
 
 }
 
+/*
+ * SelectionCandidateSorting sorts candidates using selection sort.
+ * Purpose: Reorder the candidate list by ID or name in ascending or descending order.
+ * Flow: Copy candidate data -> find min/max index in unsorted portion -> swap with end position -> repeat -> save back to model.
+ */
 func SelectionCandidateSorting(sort string, sortBy string) {
 	var candidate model.Candidates = model.Candidate
 	var temp model.CandidateData

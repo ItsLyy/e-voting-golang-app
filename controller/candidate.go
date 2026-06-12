@@ -2,6 +2,11 @@ package controller
 
 import "e-voting/model"
 
+/*
+ * CreateCandidate adds a new candidate to the list.
+ * Purpose: Handle candidate creation from the UI with validation and sorted insertion.
+ * Flow: Validate input -> check duplicate via search -> insert at correct position based on sort settings -> increment length -> return response.
+ */
 func CreateCandidate(candidate model.CandidateData, candidateSetting model.DataSetting) Response {
 	if candidate.CandidateNumber == 0 || candidate.Name == "" {
 		return Response{Success: false, Message: "invalid candidate data"}
@@ -66,6 +71,11 @@ func CreateCandidate(candidate model.CandidateData, candidateSetting model.DataS
 	return Response{Success: true, Message: "candidate created successfully"}
 }
 
+/*
+ * DeleteCandidate removes a candidate by candidate number.
+ * Purpose: Remove an existing candidate from the data.
+ * Flow: Find index by ID -> return error if not found -> shift remaining entries left -> decrement length -> return response.
+ */
 func DeleteCandidate(id int, candidateSetting model.DataSetting) Response {
 	var index = optimizationCandidateSearchIndex(id, candidateSetting)
 
@@ -84,6 +94,11 @@ func DeleteCandidate(id int, candidateSetting model.DataSetting) Response {
 	return Response{Success: true, Message: "candidate deleted successfully"}
 }
 
+/*
+ * UpdateCandidate replaces an existing candidate's data.
+ * Purpose: Allow editing a candidate's name or vision mission.
+ * Flow: Find index by ID -> return error if not found -> overwrite data at index -> return response.
+ */
 func UpdateCandidate(id int, candidate model.CandidateData, candidateSetting model.DataSetting) Response {
 	var index = optimizationCandidateSearchIndex(id, candidateSetting)
 
@@ -95,6 +110,11 @@ func UpdateCandidate(id int, candidate model.CandidateData, candidateSetting mod
 	return Response{Success: true, Message: "candidate updated successfully"}
 }
 
+/*
+ * optimizationCandidateSearchIndex finds a candidate's array index by number.
+ * Purpose: Pick the fastest search method (binary or sequential) based on current settings.
+ * Flow: If sorted by ID, use binary search -> otherwise use sequential search -> return index or -1.
+ */
 func optimizationCandidateSearchIndex(candidateNumber int, candidateSetting model.DataSetting) int {
 	var index = -1
 	if (candidateSetting.SortOrder == "asc" || candidateSetting.SortOrder == "desc") && candidateSetting.SortBy == "id" {
@@ -106,6 +126,11 @@ func optimizationCandidateSearchIndex(candidateNumber int, candidateSetting mode
 	return index
 }
 
+/*
+ * ShowCandidateById retrieves a candidate by candidate number.
+ * Purpose: Return a single candidate record for display or editing.
+ * Flow: Find index by ID -> return error if not found -> return candidate data in response.
+ */
 func ShowCandidateById(id int, candidateSetting model.DataSetting) Response {
 	var index = optimizationCandidateSearchIndex(id, candidateSetting)
 	if index == -1 {
@@ -115,6 +140,11 @@ func ShowCandidateById(id int, candidateSetting model.DataSetting) Response {
 	return Response{Success: true, Message: "candidate found", Data: model.Candidate.Data[index]}
 }
 
+/*
+ * ShowCandidateByName retrieves a candidate by name.
+ * Purpose: Return a single candidate record when searching by name.
+ * Flow: Find index by name -> return error if not found -> return candidate data in response.
+ */
 func ShowCandidateByName(name string, candidateSetting model.DataSetting) Response {
 	var index = optimizationCandidateNameSearchIndex(name, candidateSetting)
 	if index == -1 {
@@ -124,6 +154,11 @@ func ShowCandidateByName(name string, candidateSetting model.DataSetting) Respon
 	return Response{Success: true, Message: "candidate found", Data: model.Candidate.Data[index]}
 }
 
+/*
+ * optimizationCandidateNameSearchIndex finds a candidate's array index by name.
+ * Purpose: Pick the fastest search method (binary or sequential) based on current settings.
+ * Flow: If sorted by name with binary search enabled, use binary search -> otherwise use sequential search -> return index or -1.
+ */
 func optimizationCandidateNameSearchIndex(name string, candidateSetting model.DataSetting) int {
 	var index = -1
 	if (candidateSetting.SortOrder == "asc" || candidateSetting.SortOrder == "desc") && candidateSetting.SortBy == "name" && candidateSetting.SearchSetting == "binary" {

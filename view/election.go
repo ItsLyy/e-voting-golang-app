@@ -6,6 +6,11 @@ import (
 	"fmt"
 )
 
+/*
+ * manageElection displays the election management submenu.
+ * Purpose: Let the user view results or reset the election.
+ * Flow: Show submenu -> read choice -> route to results, reset, or go back home.
+ */
 func manageElection(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 
@@ -36,6 +41,11 @@ func manageElection(candidateSetting, voterSetting *model.DataSetting) {
 	}
 }
 
+/*
+ * displayTableElectionResults prints vote counts and percentages per candidate.
+ * Purpose: Show election outcome in a formatted table.
+ * Flow: Tally votes via InputElection -> sum total -> loop candidates and print name, percentage, and vote count.
+ */
 func displayTableElectionResults() {
 	var i int = 0
 	var election model.Elections = controller.InputElection()
@@ -53,6 +63,11 @@ func displayTableElectionResults() {
 	fmt.Print(tableLine())
 }
 
+/*
+ * viewElectionResults shows the election results table with navigation options.
+ * Purpose: Display vote results and let the user go back or quit.
+ * Flow: Print results table -> read choice -> route to election menu or quit.
+ */
 func viewElectionResults(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 
@@ -74,6 +89,11 @@ func viewElectionResults(candidateSetting, voterSetting *model.DataSetting) {
 	}
 }
 
+/*
+ * resetElection clears all votes after user confirmation.
+ * Purpose: Start a fresh election by removing every voter's candidate choice.
+ * Flow: Ask for confirmation -> if yes, call ResetElection -> return to election menu.
+ */
 func resetElection(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 
