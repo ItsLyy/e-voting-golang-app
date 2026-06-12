@@ -26,7 +26,7 @@ func Home(candidateSetting, voterSetting *model.DataSetting) {
 
 	switch choice {
 	case "1":
-		ManageCandidates(&candidateSetting)
+		manageCandidates(candidateSetting, voterSetting)
 	case "2":
 		manageVoter(candidateSetting, voterSetting)
 	case "3":

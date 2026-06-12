@@ -126,10 +126,10 @@ func ShowCandidateByName(name string, candidateSetting model.DataSetting) Respon
 
 func optimizationCandidateNameSearchIndex(name string, candidateSetting model.DataSetting) int {
 	var index = -1
-	if (candidateSetting.SortOrder == "asc" || candidateSetting.SortOrder == "desc") && candidateSetting.SortBy == "name" {
-		index = SearchBinaryVoterByName(name, candidateSetting.SortOrder)
+	if (candidateSetting.SortOrder == "asc" || candidateSetting.SortOrder == "desc") && candidateSetting.SortBy == "name" && candidateSetting.SearchSetting == "binary" {
+		index = SearchBinaryCandidateByName(name, candidateSetting.SortOrder)
 	} else {
-		index = SearchSequentialVoterByName(name)
+		index = SearchSequentialCandidateByName(name)
 	}
 
 	return index

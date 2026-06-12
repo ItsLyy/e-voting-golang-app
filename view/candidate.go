@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ManageCandidates(candidateSetting *model.DataSetting) {
+func manageCandidates(candidateSetting, voterSetting *model.DataSetting) {
 	var choose string
 	fmt.Print(normalLine())
 	fmt.Println("selamat datang di Candidate Management")
@@ -23,38 +23,43 @@ func ManageCandidates(candidateSetting *model.DataSetting) {
 	fmt.Print("Choice: ")
 	fmt.Scan(&choose)
 	switch choose {
-		case "1" : 
-		ViewAllCandidate(candidateSetting)
-	case "2" :
-		AddCandidate(candidateSetting)
-	case "3" :
-		DeleteCandidate(candidateSetting)
-	case "b" :
-		Home()
-		
-	case "q" :
+	case "1":
+		viewAllCandidate(candidateSetting, voterSetting)
+	case "2":
+		addCandidate(candidateSetting, voterSetting)
+	case "3":
+		deleteCandidate(candidateSetting, voterSetting)
+	case "b":
+		Home(candidateSetting, voterSetting)
+	case "q":
 		exit()
-		default : 
+	default:
 		wrong(choose)
-		ManageCandidates(candidateSetting)
+		manageCandidates(candidateSetting, voterSetting)
 	}
 }
 
-func displayTableCandidate(){
+func displayTableCandidate() {
 	var i int = 0
 	fmt.Print(tableLine())
-	fmt.Printf("%-30s%-44s%-40s\n", "CANDIDATENUMBER","NAME","VISIONMISSION")
+	fmt.Printf("|%-10s|%-54s|%-50s|\n", "Number", "Name", "Vision Mission")
 	fmt.Print(tableLine())
 
-	for i <model.Candidate.Length {
-		fmt.Printf("|%-30d|%-44s|%-40s\n",model.Candidate.Data[i].CandidateNumber,model.Candidate.Data[i].Name,model.Candidate.Data[i].VisionMission)
+	for i < model.Candidate.Length {
+		var j int = 0
+		var text string = ""
+		for j < model.Candidate.Data[i].VMLength {
+			text += model.Candidate.Data[i].VisionMission[j] + " "
+			j++
+		}
+		fmt.Printf("|%-10d|%-54s|%-50s|\n", model.Candidate.Data[i].CandidateNumber, model.Candidate.Data[i].Name, text)
 		i++
 	}
 	fmt.Print(tableLine())
-		
+
 }
 
-func ViewAllCandidate(candidateSetting *model.DataSetting) {
+func viewAllCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 	fmt.Println("kamu sedang berada di ViewAllCandidate")
 	displayTableCandidate()
@@ -64,55 +69,64 @@ func ViewAllCandidate(candidateSetting *model.DataSetting) {
 	fmt.Print("Choice: ")
 	fmt.Scan(&choice)
 	switch choice {
-	case "1" :
-		SearchCandidate(candidateSetting)
-		
-	case "2" :
-		SortCandidate(candidateSetting)
-		
-	case "b" : 
-		ManageCandidates(candidateSetting)
-	case "q" :
+	case "1":
+		searchCandidate(candidateSetting, voterSetting)
+	case "2":
+		sortCandidate(candidateSetting, voterSetting)
+	case "b":
+		manageCandidates(candidateSetting, voterSetting)
+	case "q":
 		exit()
-		default : 
+	default:
 		wrong(choice)
 		inputChoice(&choice)
 	}
 }
 
-func AddCandidate(candidateSetting *model.DataSetting) {
+func addCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 	var candidate model.CandidateData
 
-	fmt.Printf("%-16s%s", "CandidateNumber", ": ")
+	fmt.Printf("%-16s%s", "Number", ": ")
 	fmt.Scan(&candidate.CandidateNumber)
 	fmt.Printf("%-16s%s", "Name", ": ")
 	fmt.Scan(&candidate.Name)
+	fmt.Printf("%-16s%s", "VisionMission", ": ")
+	fmt.Println("use word 'STOP' to finish typing.")
+
+	var word string
+	fmt.Scan(&word)
+
+	for word != "STOP" {
+		candidate.VisionMission[candidate.VMLength] = word
+		candidate.VMLength++
+		fmt.Scan(&word)
+	}
+
 	confirmation(&choice)
-	
+
 	fmt.Print("\n", normalLine())
 	switch choice {
 	case "Y", "y":
-		// [Controller] -> Adding Voter
 		var res controller.Response = controller.CreateCandidate(candidate, *candidateSetting)
 		if res.Success {
-			fmt.Printf("\n%s has suuccesfully added to the data!\n",candidate.Name)
-		}else {
+			fmt.Printf("\n%s has suuccesfully added to the data!\n", candidate.Name)
+		} else {
 			fmt.Printf("%s", res.Message)
 			fmt.Println(normalLine())
-			AddCandidate(candidateSetting)
+			addCandidate(candidateSetting, voterSetting)
 		}
 	case "n", "N":
-		ManageCandidates(candidateSetting)
+		manageCandidates(candidateSetting, voterSetting)
 	default:
 		fmt.Println("Something went wrong! try again,")
-		AddCandidate(candidateSetting)
+		addCandidate(candidateSetting, voterSetting)
 	}
 
-	ManageCandidates(candidateSetting)
+	manageCandidates(candidateSetting, voterSetting)
 }
 
-func DeleteCandidate(candidateSetting *model.DataSetting) {
+func deleteCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 	var id int
 
@@ -123,36 +137,36 @@ func DeleteCandidate(candidateSetting *model.DataSetting) {
 	fmt.Scan(&choice)
 	fmt.Print("\n", normalLine())
 	switch choice {
-	case "y","Y" : 
+	case "y", "Y":
 		var res controller.Response = controller.DeleteCandidate(id, *candidateSetting)
 		if res.Success {
 			fmt.Printf("\n%d has successfully deleted to the data!\n", id)
 		} else {
 			fmt.Println("ID not found! try again,")
-			DeleteCandidate(candidateSetting)
+			deleteCandidate(candidateSetting, voterSetting)
 		}
-	case "n","N" : 
-		ManageCandidates(candidateSetting)
-	default :
+	case "n", "N":
+		manageCandidates(candidateSetting, voterSetting)
+	default:
 		fmt.Println("something went wrong! try again,")
-		DeleteCandidate(candidateSetting)
+		deleteCandidate(candidateSetting, voterSetting)
 	}
-	ManageCandidates(candidateSetting)
+	manageCandidates(candidateSetting, voterSetting)
 
 }
 
-func SearchCandidate(candidateSetting *model.DataSetting) {
+func searchCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 	var res controller.Response
 
-
 	fmt.Print("[i] ID ")
-	fmt.Print("[n] Name ")
+	fmt.Println("[n] Name ")
 	fmt.Print("Search By: ")
 	fmt.Scan(&choice)
+	fmt.Print("Search: ")
 	switch choice {
 	case "i":
-		var id int 
+		var id int
 		fmt.Scan(&id)
 
 		res = controller.ShowCandidateById(id, *candidateSetting)
@@ -161,72 +175,98 @@ func SearchCandidate(candidateSetting *model.DataSetting) {
 		fmt.Scan(&name)
 
 		res = controller.ShowCandidateByName(name, *candidateSetting)
-	default :
+	default:
 		fmt.Println("wrong choice! try again")
-		SearchCandidate(candidateSetting)
+		searchCandidate(candidateSetting, voterSetting)
 	}
 
 	if !res.Success {
 		fmt.Println(res.Message)
-		SearchCandidate(candidateSetting)
+		searchCandidate(candidateSetting, voterSetting)
 	} else {
 		var data model.CandidateData
 		data = res.Data.(model.CandidateData)
-		displayCandidate(data, candidateSetting)
+		displayCandidate(data, candidateSetting, voterSetting)
 	}
 
-	ViewAllCandidate(candidateSetting)
+	viewAllCandidate(candidateSetting, voterSetting)
 
 }
 
-func displayCandidate(data model.CandidateData, candidateSetting *model.DataSetting) {
+func displayCandidate(data model.CandidateData, candidateSetting, voterSetting *model.DataSetting) {
 	fmt.Println()
-	fmt.Printf("%-10s%-18s\n", "Candidate Number", "Name")
-	fmt.Printf("%-10d%-18s\n", data.CandidateNumber, data.Name)
+	fmt.Printf("%-10s%-18s%-60s\n", "Number", "Name", "Vision Mission")
+	fmt.Printf("%-10d%-18s", data.CandidateNumber, data.Name)
+	var i int
+	for i = 0; i < data.VMLength; i++ {
+		fmt.Print(data.VisionMission[i], " ")
+	}
 	fmt.Println()
-	fmt.Println("1. Change name\n2. Delete candidate\n3. Return to candidate list")
+	fmt.Println()
+	fmt.Println("1. Change name\n2. Change vision mission\n3. Delete candidate\n4. Return to candidate list")
 
 	fmt.Println()
 	var choice string
 	inputChoice(&choice)
 	switch choice {
 	case "1":
-		changeNameCandidate(data, candidateSetting)
+		changeNameCandidate(data, candidateSetting, voterSetting)
 	case "2":
-		deleteDataCandidateDetail(data, candidateSetting)
+		changeVisionMissionCandidate(data, candidateSetting, voterSetting)
 	case "3":
-		ViewAllCandidate(candidateSetting)
+		deleteDataCandidateDetail(data, candidateSetting, voterSetting)
+	case "4":
+		viewAllCandidate(candidateSetting, voterSetting)
 	}
 }
 
-func changeNameCandidate(data model.CandidateData, candidateSetting *model.DataSetting) {
+func changeNameCandidate(data model.CandidateData, candidateSetting, voterSetting *model.DataSetting) {
 	var id int = data.CandidateNumber
 	fmt.Print("Enter new name: ")
 	fmt.Scan(&data.Name)
 
 	var res controller.Response = controller.UpdateCandidate(id, data, *candidateSetting)
 	fmt.Println(res.Message)
-	displayCandidate(data, candidateSetting)
+	displayCandidate(data, candidateSetting, voterSetting)
 }
 
-func deleteDataCandidateDetail(data model.CandidateData, candidateSetting *model.DataSetting) {
+func changeVisionMissionCandidate(data model.CandidateData, candidateSetting, voterSetting *model.DataSetting) {
+	var word string
+	fmt.Print("Enter new vision mission: ")
+	fmt.Scan(&word)
+
+	data.VisionMission = [999]string{}
+	data.VMLength = 0
+
+	for word != "STOP" {
+		data.VisionMission[data.VMLength] = word
+		data.VMLength++
+		fmt.Scan(&word)
+	}
+
+	var res controller.Response = controller.UpdateCandidate(data.CandidateNumber, data, *candidateSetting)
+	fmt.Println(res.Message)
+	displayCandidate(data, candidateSetting, voterSetting)
+}
+
+func deleteDataCandidateDetail(data model.CandidateData, candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 	confirmation(&choice)
 	switch choice {
 	case "Y", "y":
-		var res controller.Response = controller.DeleteVoter(data.CandidateNumber, *candidateSetting)
+		var res controller.Response = controller.DeleteCandidate(data.CandidateNumber, *candidateSetting)
 		if res.Success {
 			fmt.Printf("\n%d has successfully deleted to the data!\n", data.CandidateNumber)
 		} else {
 			fmt.Println("ID not found! try again,")
-			deleteVoter(candidateSetting)
+			deleteCandidate(candidateSetting, voterSetting)
 		}
 	case "n", "N":
-		viewAllVoters(candidateSetting)
+		manageCandidates(candidateSetting, voterSetting)
 	}
 }
 
-func SortCandidate(candidateSetting *model.DataSetting) {
+func sortCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 
 	fmt.Println("[i] ID ")
@@ -234,13 +274,13 @@ func SortCandidate(candidateSetting *model.DataSetting) {
 	fmt.Print("Sort By: ")
 	fmt.Scan(&choice)
 	switch choice {
-	case "i" :
-		candidateSetting.SortBy ="id"
-	case "n" :
-		candidateSetting.SortBy ="name"
-	default :
+	case "i":
+		candidateSetting.SortBy = "id"
+	case "n":
+		candidateSetting.SortBy = "name"
+	default:
 		fmt.Println("wrong choice! try again")
-		SortCandidate(candidateSetting)
+		sortCandidate(candidateSetting, voterSetting)
 	}
 	fmt.Print("Sorting [a] Ascending [d] Descending: ")
 	fmt.Scan(&choice)
@@ -252,16 +292,12 @@ func SortCandidate(candidateSetting *model.DataSetting) {
 		candidateSetting.SortOrder = "desc"
 	default:
 		fmt.Println("Wrong choice! try again")
-		SortCandidate(candidateSetting)
+		sortCandidate(candidateSetting, voterSetting)
 	}
 
 	fmt.Println()
 
 	controller.SelectionCandidateSorting(candidateSetting.SortOrder, candidateSetting.SortBy)
 
-	ViewAllCandidate(candidateSetting)
+	viewAllCandidate(candidateSetting, voterSetting)
 }
-
-
-
-
