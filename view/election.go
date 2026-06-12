@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func manageElection() {
+func manageElection(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 
 	fmt.Println()
@@ -26,11 +26,11 @@ func manageElection() {
 
 	switch choice {
 	case "1":
-		viewElectionResults()
+		viewElectionResults(candidateSetting, voterSetting)
 	case "2":
-		resetElection()
+		resetElection(candidateSetting, voterSetting)
 	case "b":
-		Home()
+		Home(candidateSetting, voterSetting)
 	case "q":
 		exit()
 	}
@@ -45,7 +45,7 @@ func displayTableElectionResults() {
 	fmt.Printf("|%-80s|%-20s|%-13s|\n", "Name", "Persentage(%)", "Total Voted")
 	fmt.Print(tableLine())
 
-	for i < election.Length {
+	for i < model.Candidate.Length {
 		var candidateIndex = election.Data[i].CandidateIndex
 		fmt.Printf("|%-80s|%-20.2f|%-13d|\n", model.Candidate.Data[candidateIndex].Name, controller.CalculatePercentage(totalVotes, election.Data[i].TotalVote), election.Data[i].TotalVote)
 		i++
@@ -53,7 +53,7 @@ func displayTableElectionResults() {
 	fmt.Print(tableLine())
 }
 
-func viewElectionResults() {
+func viewElectionResults(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 
 	displayTableElectionResults()
@@ -65,7 +65,7 @@ func viewElectionResults() {
 
 	switch choice {
 	case "b":
-		manageElection()
+		manageElection(candidateSetting, voterSetting)
 	case "q":
 		exit()
 	default:
@@ -74,7 +74,7 @@ func viewElectionResults() {
 	}
 }
 
-func resetElection() {
+func resetElection(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
 
 	fmt.Print("Are you sure you want to reset the election? (Y/n) ")
@@ -84,11 +84,11 @@ func resetElection() {
 	switch choice {
 	case "Y", "y":
 		controller.ResetElection()
-		manageElection()
+		manageElection(candidateSetting, voterSetting)
 	case "n", "N":
-		manageElection()
+		manageElection(candidateSetting, voterSetting)
 	default:
 		fmt.Println("Invalid choice. Please enter 'Y' or 'n'.")
-		resetElection()
+		resetElection(candidateSetting, voterSetting)
 	}
 }

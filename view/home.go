@@ -5,20 +5,8 @@ import (
 	"fmt"
 )
 
-func Home() {
+func Home(candidateSetting, voterSetting *model.DataSetting) {
 	var choice string
-
-	var voterSetting model.DataSetting
-	var candidateSetting model.DataSetting
-
-	voterSetting.SortBy = ""
-	voterSetting.SortOrder = ""
-	voterSetting.SortSetting = "sequential"
-	voterSetting.SearchSetting = "binary"
-	candidateSetting.SortBy = ""
-	candidateSetting.SortOrder = ""
-	candidateSetting.SortSetting = "sequential"
-	candidateSetting.SearchSetting = "binary"
 
 	fmt.Println()
 	fmt.Print(normalLine())
@@ -40,18 +28,18 @@ func Home() {
 	case "1":
 		ManageCandidates(&candidateSetting)
 	case "2":
-		manageVoter(&voterSetting)
+		manageVoter(candidateSetting, voterSetting)
 	case "3":
-		castingVote(&voterSetting)
+		castingVote(candidateSetting, voterSetting)
 	case "4":
-		manageElection()
+		manageElection(candidateSetting, voterSetting)
 	case "q":
 		exit()
 	case "s":
-		settingMenu(&candidateSetting, &voterSetting)
+		settingMenu(candidateSetting, voterSetting)
 	default:
 		wrong(choice)
-		Home()
+		Home(candidateSetting, voterSetting)
 	}
 }
 

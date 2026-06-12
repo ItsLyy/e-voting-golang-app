@@ -8,6 +8,5 @@ type ElectionData struct {
 }
 
 type Elections struct {
-	Data   [NMAXELECTION]ElectionData
-	Length int
+	Data [NMAXELECTION]ElectionData
 }

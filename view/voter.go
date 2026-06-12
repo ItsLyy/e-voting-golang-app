@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func manageVoter(voterSetting *model.DataSetting) {
+func manageVoter(candidateSettings, voterSetting *model.DataSetting) {
 	var choice string
 
 	fmt.Println()
@@ -27,18 +27,18 @@ func manageVoter(voterSetting *model.DataSetting) {
 
 	switch choice {
 	case "1":
-		viewAllVoters(voterSetting)
+		viewAllVoters(candidateSettings, voterSetting)
 	case "2":
-		addVoter(voterSetting)
+		addVoter(candidateSettings, voterSetting)
 	case "3":
-		deleteVoter(voterSetting)
+		deleteVoter(candidateSettings, voterSetting)
 	case "b":
-		Home()
+		Home(candidateSettings, voterSetting)
 	case "q":
 		exit()
 	default:
 		wrong(choice)
-		manageVoter(voterSetting)
+		manageVoter(candidateSettings, voterSetting)
 	}
 }
 
@@ -56,7 +56,7 @@ func displayTableVoter() {
 	fmt.Print(tableLine())
 }
 
-func viewAllVoters(voterSetting *model.DataSetting) {
+func viewAllVoters(candidateSettings, voterSetting *model.DataSetting) {
 	var choice string
 
 	displayTableVoter()
@@ -67,11 +67,11 @@ func viewAllVoters(voterSetting *model.DataSetting) {
 
 	switch choice {
 	case "1":
-		searchVoters(voterSetting)
+		searchVoters(candidateSettings, voterSetting)
 	case "2":
-		sortVoters(voterSetting)
+		sortVoters(candidateSettings, voterSetting)
 	case "b":
-		manageVoter(voterSetting)
+		manageVoter(candidateSettings, voterSetting)
 	case "q":
 		exit()
 	default:
@@ -80,7 +80,7 @@ func viewAllVoters(voterSetting *model.DataSetting) {
 	}
 }
 
-func addVoter(voterSetting *model.DataSetting) {
+func addVoter(candidateSettings, voterSetting *model.DataSetting) {
 	var choice string
 	var voter model.VoterData
 
@@ -99,19 +99,19 @@ func addVoter(voterSetting *model.DataSetting) {
 		} else {
 			fmt.Printf("%s", res.Message)
 			fmt.Println(normalLine())
-			addVoter(voterSetting)
+			addVoter(candidateSettings, voterSetting)
 		}
 	case "n", "N":
-		manageVoter(voterSetting)
+		manageVoter(candidateSettings, voterSetting)
 	default:
 		fmt.Println("Something went wrong! try again,")
-		addVoter(voterSetting)
+		addVoter(candidateSettings, voterSetting)
 	}
 
-	manageVoter(voterSetting)
+	manageVoter(candidateSettings, voterSetting)
 }
 
-func deleteVoter(voterSetting *model.DataSetting) {
+func deleteVoter(candidateSettings, voterSetting *model.DataSetting) {
 	var choice string
 	var id int
 
@@ -128,19 +128,19 @@ func deleteVoter(voterSetting *model.DataSetting) {
 			fmt.Printf("\n%d has successfully deleted to the data!\n", id)
 		} else {
 			fmt.Println("ID not found! try again,")
-			deleteVoter(voterSetting)
+			deleteVoter(candidateSettings, voterSetting)
 		}
 	case "n", "N":
-		manageVoter(voterSetting)
+		manageVoter(candidateSettings, voterSetting)
 	default:
 		fmt.Println("Something went wrong! try again,")
-		deleteVoter(voterSetting)
+		deleteVoter(candidateSettings, voterSetting)
 	}
 
-	manageVoter(voterSetting)
+	manageVoter(candidateSettings, voterSetting)
 }
 
-func searchVoters(voterSetting *model.DataSetting) {
+func searchVoters(candidateSettings, voterSetting *model.DataSetting) {
 	var choice string
 	var res controller.Response
 
@@ -163,22 +163,22 @@ func searchVoters(voterSetting *model.DataSetting) {
 		res = controller.ShowVoterByName(name, *voterSetting)
 	default:
 		fmt.Println("Wrong choice! try again")
-		searchVoters(voterSetting)
+		searchVoters(candidateSettings, voterSetting)
 	}
 
 	if !res.Success {
 		fmt.Println(res.Message)
-		searchVoters(voterSetting)
+		searchVoters(candidateSettings, voterSetting)
 	} else {
 		var data model.VoterData
 		data = res.Data.(model.VoterData)
-		displayVoter(data, voterSetting)
+		displayVoter(data, candidateSettings, voterSetting)
 	}
 
-	viewAllVoters(voterSetting)
+	viewAllVoters(candidateSettings, voterSetting)
 }
 
-func displayVoter(data model.VoterData, voterSetting *model.DataSetting) {
+func displayVoter(data model.VoterData, candidateSettings, voterSetting *model.DataSetting) {
 	fmt.Println()
 	fmt.Printf("%-10s%-18s%-18s\n", "Voter ID", "Candidate Number", "Name")
 	fmt.Printf("%-10d%-18d%-18s\n", data.VoterId, data.CandidateNumber, data.Name)
@@ -190,15 +190,15 @@ func displayVoter(data model.VoterData, voterSetting *model.DataSetting) {
 	inputChoice(&choice)
 	switch choice {
 	case "1":
-		changeNameVoter(data, voterSetting)
+		changeNameVoter(data, candidateSettings, voterSetting)
 	case "2":
-		deleteDataVoterDetail(data, voterSetting)
+		deleteDataVoterDetail(data, candidateSettings, voterSetting)
 	case "3":
-		viewAllVoters(voterSetting)
+		viewAllVoters(candidateSettings, voterSetting)
 	}
 }
 
-func deleteDataVoterDetail(data model.VoterData, voterSetting *model.DataSetting) {
+func deleteDataVoterDetail(data model.VoterData, candidateSettings, voterSetting *model.DataSetting) {
 	var choice string
 	confirmation(&choice)
 	switch choice {
@@ -208,24 +208,24 @@ func deleteDataVoterDetail(data model.VoterData, voterSetting *model.DataSetting
 			fmt.Printf("\n%d has successfully deleted to the data!\n", data.VoterId)
 		} else {
 			fmt.Println("ID not found! try again,")
-			deleteVoter(voterSetting)
+			deleteVoter(candidateSettings, voterSetting)
 		}
 	case "n", "N":
-		viewAllVoters(voterSetting)
+		viewAllVoters(candidateSettings, voterSetting)
 	}
 }
 
-func changeNameVoter(data model.VoterData, voterSetting *model.DataSetting) {
+func changeNameVoter(data model.VoterData, candidateSettings, voterSetting *model.DataSetting) {
 	var id int = data.VoterId
 	fmt.Print("Enter new name: ")
 	fmt.Scan(&data.Name)
 
 	var res controller.Response = controller.UpdateVoter(id, data, *voterSetting)
 	fmt.Println(res.Message)
-	displayVoter(data, voterSetting)
+	displayVoter(data, candidateSettings, voterSetting)
 }
 
-func sortVoters(voterSetting *model.DataSetting) {
+func sortVoters(candidateSettings, voterSetting *model.DataSetting) {
 	var choice string
 
 	fmt.Print("[i] ID  ")
@@ -242,7 +242,7 @@ func sortVoters(voterSetting *model.DataSetting) {
 		voterSetting.SortBy = "candidate"
 	default:
 		fmt.Println("Wrong choice! try again")
-		sortVoters(voterSetting)
+		sortVoters(candidateSettings, voterSetting)
 	}
 	fmt.Print("Sorting [a] Ascending [d] Descending: ")
 	fmt.Scan(&choice)
@@ -254,7 +254,7 @@ func sortVoters(voterSetting *model.DataSetting) {
 		voterSetting.SortOrder = "desc"
 	default:
 		fmt.Println("Wrong choice! try again")
-		sortVoters(voterSetting)
+		sortVoters(candidateSettings, voterSetting)
 	}
 
 	fmt.Println()
@@ -265,10 +265,10 @@ func sortVoters(voterSetting *model.DataSetting) {
 		controller.InsertionVotersSorting(voterSetting.SortOrder, voterSetting.SortBy)
 	}
 
-	viewAllVoters(voterSetting)
+	viewAllVoters(candidateSettings, voterSetting)
 }
 
-func castingVote(voterSetting *model.DataSetting) {
+func castingVote(candidateSettings, voterSetting *model.DataSetting) {
 	displayTableVoter()
 	fmt.Println()
 
@@ -285,5 +285,5 @@ func castingVote(voterSetting *model.DataSetting) {
 	var res controller.Response = controller.CastingVoteVoter(voterId, candidateId, *voterSetting)
 	fmt.Println(res.Message)
 	fmt.Println()
-	manageVoter(voterSetting)
+	manageVoter(candidateSettings, voterSetting)
 }

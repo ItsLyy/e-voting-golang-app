@@ -9,5 +9,17 @@ func main() {
 	model.Candidate = model.GenerateCandidatesData()
 	model.Voter = model.GenerateVotersData()
 
-	view.Home()
+	var voterSetting model.DataSetting
+	var candidateSetting model.DataSetting
+
+	voterSetting.SortBy = ""
+	voterSetting.SortOrder = ""
+	voterSetting.SortSetting = "selection"
+	voterSetting.SearchSetting = "binary"
+	candidateSetting.SortBy = ""
+	candidateSetting.SortOrder = ""
+	candidateSetting.SortSetting = "selection"
+	candidateSetting.SearchSetting = "binary"
+
+	view.Home(&candidateSetting, &voterSetting)
 }
