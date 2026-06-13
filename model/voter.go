@@ -14,6 +14,11 @@ type Voters struct {
 
 var Voter Voters
 
+/*
+ * GenerateVotersData creates the initial voter dataset.
+ * Purpose: Provide default voter records when the app starts.
+ * Flow: Build a Voters struct with 20 sample entries -> return it.
+ */
 func GenerateVotersData() Voters {
 	var data Voters = Voters{
 		Data: [NMAXVOTER]VoterData{

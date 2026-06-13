@@ -6,6 +6,11 @@ import (
 	"fmt"
 )
 
+/*
+ * manageVoter displays the voter management submenu.
+ * Purpose: Let the user view, add, or delete voters.
+ * Flow: Show submenu -> read choice -> route to the selected action or go back home.
+ */
 func manageVoter(candidateSettings, voterSetting *model.DataSetting) {
 	var choice string
 
@@ -42,6 +47,11 @@ func manageVoter(candidateSettings, voterSetting *model.DataSetting) {
 	}
 }
 
+/*
+ * displayTableVoter prints all voters in a formatted table.
+ * Purpose: Show voter ID, name, and selected candidate number in the console.
+ * Flow: Print table header -> loop each voter -> print rows.
+ */
 func displayTableVoter() {
 	var i int = 0
 
@@ -56,6 +66,11 @@ func displayTableVoter() {
 	fmt.Print(tableLine())
 }
 
+/*
+ * viewAllVoters shows the voter list with search and sort options.
+ * Purpose: Display all voters and let the user search, sort, go back, or quit.
+ * Flow: Print voter table -> show action menu -> route to search, sort, or navigation.
+ */
 func viewAllVoters(candidateSettings, voterSetting *model.DataSetting) {
 	var choice string
 
@@ -80,6 +95,11 @@ func viewAllVoters(candidateSettings, voterSetting *model.DataSetting) {
 	}
 }
 
+/*
+ * addVoter handles the form to create a new voter.
+ * Purpose: Collect voter details from the user and save them via the controller.
+ * Flow: Read ID and name -> confirm -> call CreateVoter -> return to menu.
+ */
 func addVoter(candidateSettings, voterSetting *model.DataSetting) {
 	var choice string
 	var voter model.VoterData
@@ -111,6 +131,11 @@ func addVoter(candidateSettings, voterSetting *model.DataSetting) {
 	manageVoter(candidateSettings, voterSetting)
 }
 
+/*
+ * deleteVoter handles removing a voter by ID.
+ * Purpose: Let the user pick a voter to delete with confirmation.
+ * Flow: Show table -> read ID -> confirm -> call DeleteVoter -> return to menu.
+ */
 func deleteVoter(candidateSettings, voterSetting *model.DataSetting) {
 	var choice string
 	var id int
@@ -140,6 +165,11 @@ func deleteVoter(candidateSettings, voterSetting *model.DataSetting) {
 	manageVoter(candidateSettings, voterSetting)
 }
 
+/*
+ * searchVoters finds and displays a single voter.
+ * Purpose: Let the user search by ID or name and view the result.
+ * Flow: Choose search field -> read value -> call ShowVoterById or ShowVoterByName -> display result or retry.
+ */
 func searchVoters(candidateSettings, voterSetting *model.DataSetting) {
 	var choice string
 	var res controller.Response
@@ -178,6 +208,11 @@ func searchVoters(candidateSettings, voterSetting *model.DataSetting) {
 	viewAllVoters(candidateSettings, voterSetting)
 }
 
+/*
+ * displayVoter shows one voter's details with edit options.
+ * Purpose: Let the user view and modify a single voter after searching.
+ * Flow: Print voter info -> show edit menu -> route to change name, delete, or go back.
+ */
 func displayVoter(data model.VoterData, candidateSettings, voterSetting *model.DataSetting) {
 	fmt.Println()
 	fmt.Printf("%-10s%-18s%-18s\n", "Voter ID", "Candidate Number", "Name")
@@ -198,6 +233,11 @@ func displayVoter(data model.VoterData, candidateSettings, voterSetting *model.D
 	}
 }
 
+/*
+ * deleteDataVoterDetail removes a voter from the detail view.
+ * Purpose: Let the user delete a voter after viewing their details.
+ * Flow: Confirm action -> call DeleteVoter -> show result or return to list.
+ */
 func deleteDataVoterDetail(data model.VoterData, candidateSettings, voterSetting *model.DataSetting) {
 	var choice string
 	confirmation(&choice)
@@ -215,6 +255,11 @@ func deleteDataVoterDetail(data model.VoterData, candidateSettings, voterSetting
 	}
 }
 
+/*
+ * changeNameVoter updates a voter's name.
+ * Purpose: Let the user rename a voter from the detail view.
+ * Flow: Read new name -> call UpdateVoter -> show updated detail view.
+ */
 func changeNameVoter(data model.VoterData, candidateSettings, voterSetting *model.DataSetting) {
 	var id int = data.VoterId
 	fmt.Print("Enter new name: ")
@@ -225,6 +270,11 @@ func changeNameVoter(data model.VoterData, candidateSettings, voterSetting *mode
 	displayVoter(data, candidateSettings, voterSetting)
 }
 
+/*
+ * sortVoters configures and runs voter sorting.
+ * Purpose: Let the user choose sort field and order, then reorder the voter list.
+ * Flow: Choose sort by (ID/name/candidate) -> choose order (asc/desc) -> call selection or insertion sort -> return to list.
+ */
 func sortVoters(candidateSettings, voterSetting *model.DataSetting) {
 	var choice string
 
@@ -268,6 +318,11 @@ func sortVoters(candidateSettings, voterSetting *model.DataSetting) {
 	viewAllVoters(candidateSettings, voterSetting)
 }
 
+/*
+ * castingVote handles the voting process for a single voter.
+ * Purpose: Let a voter select a candidate and record their vote.
+ * Flow: Show voter and candidate tables -> read voter ID and candidate ID -> call CastingVoteVoter -> return to menu.
+ */
 func castingVote(candidateSettings, voterSetting *model.DataSetting) {
 	displayTableVoter()
 	fmt.Println()

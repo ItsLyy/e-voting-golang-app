@@ -5,6 +5,11 @@ import (
 	"e-voting/view"
 )
 
+/*
+ * main is the entry point of the e-voting application.
+ * Purpose: Initialize sample data and default settings, then start the home menu.
+ * Flow: Load candidate and voter data -> set default sort/search settings -> call Home menu.
+ */
 func main() {
 	model.Candidate = model.GenerateCandidatesData()
 	model.Voter = model.GenerateVotersData()

@@ -5,6 +5,11 @@ import (
 	"fmt"
 )
 
+/*
+ * settingMenu displays the app settings submenu.
+ * Purpose: Let the user configure sorting and searching algorithms for candidates and voters.
+ * Flow: Show settings menu -> read choice -> open sort/search config or go back home.
+ */
 func settingMenu(candidateSettings, voterSettings *model.DataSetting) {
 	var choice string
 
@@ -44,6 +49,11 @@ func settingMenu(candidateSettings, voterSettings *model.DataSetting) {
 	Home(candidateSettings, voterSettings)
 }
 
+/*
+ * dataSortingMenu lets the user pick a sorting algorithm.
+ * Purpose: Switch between selection sort and insertion sort for candidates or voters.
+ * Flow: Show current setting -> read choice -> update SortSetting -> confirm change.
+ */
 func dataSortingMenu(dataSetting *model.DataSetting) {
 	var choice string
 
@@ -79,6 +89,11 @@ func dataSortingMenu(dataSetting *model.DataSetting) {
 	fmt.Println()
 }
 
+/*
+ * dataSearchingMenu lets the user pick a searching algorithm.
+ * Purpose: Switch between sequential search and binary search for candidates or voters.
+ * Flow: Show current setting -> read choice -> update SearchSetting -> confirm change.
+ */
 func dataSearchingMenu(dataSetting *model.DataSetting) {
 	var choice string
 

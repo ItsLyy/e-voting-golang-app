@@ -16,6 +16,11 @@ type Candidates struct {
 
 var Candidate Candidates
 
+/*
+ * GenerateCandidatesData creates the initial candidate dataset.
+ * Purpose: Provide default candidate records when the app starts.
+ * Flow: Build a Candidates struct with 10 sample entries -> return it.
+ */
 func GenerateCandidatesData() Candidates {
 	var data Candidates = Candidates{
 		Data: [NMAXCANDIDATE]CandidateData{
