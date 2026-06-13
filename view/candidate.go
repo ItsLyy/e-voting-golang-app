@@ -58,6 +58,8 @@ func displayTableCandidate() {
 	for i < model.Candidate.Length {
 		var j int = 0
 		var text string = ""
+		//Combine all vision and mission words into a single string
+		//before displaying them in the candidate table.
 		for j < model.Candidate.Data[i].VMLength {
 			text += model.Candidate.Data[i].VisionMission[j] + " "
 			j++
@@ -116,7 +118,10 @@ func addCandidate(candidateSetting, voterSetting *model.DataSetting) {
 
 	var word string
 	fmt.Scan(&word)
-
+	
+	
+	// Allow users to enter multiple words for the vision and mission.
+	// The input process stops when the keyword "STOP" is entered.
 	for word != "STOP" {
 		candidate.VisionMission[candidate.VMLength] = word
 		candidate.VMLength++
@@ -128,6 +133,8 @@ func addCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	fmt.Print("\n", normalLine())
 	switch choice {
 	case "Y", "y":
+		// Send the candidate data to the Controller layer
+		// for validation and insertion into the data storage.
 		var res controller.Response = controller.CreateCandidate(candidate, *candidateSetting)
 		if res.Success {
 			fmt.Printf("\n%s has suuccesfully added to the data!\n", candidate.Name)
@@ -163,6 +170,8 @@ func deleteCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	fmt.Print("\n", normalLine())
 	switch choice {
 	case "y", "Y":
+		// Request the Controller to delete a candidate
+		// based on the candidate ID entered by the user.
 		var res controller.Response = controller.DeleteCandidate(id, *candidateSetting)
 		if res.Success {
 			fmt.Printf("\n%d has successfully deleted to the data!\n", id)
@@ -194,6 +203,8 @@ func searchCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	fmt.Print("Search By: ")
 	fmt.Scan(&choice)
 	fmt.Print("Search: ")
+	// Users can search for a candidate
+	// either by Candidate ID or Candidate Name.
 	switch choice {
 	case "i":
 		var id int
@@ -215,6 +226,8 @@ func searchCandidate(candidateSetting, voterSetting *model.DataSetting) {
 		searchCandidate(candidateSetting, voterSetting)
 	} else {
 		var data model.CandidateData
+		// Convert the generic interface data returned by the Controller
+		// into a CandidateData object using type assertion.
 		data = res.Data.(model.CandidateData)
 		displayCandidate(data, candidateSetting, voterSetting)
 	}
@@ -265,6 +278,8 @@ func changeNameCandidate(data model.CandidateData, candidateSetting, voterSettin
 	fmt.Print("Enter new name: ")
 	fmt.Scan(&data.Name)
 
+	// Update only the candidate's name while
+	// preserving the existing candidate number and vision-mission data.
 	var res controller.Response = controller.UpdateCandidate(id, data, *candidateSetting)
 	fmt.Println(res.Message)
 	displayCandidate(data, candidateSetting, voterSetting)
@@ -280,9 +295,14 @@ func changeVisionMissionCandidate(data model.CandidateData, candidateSetting, vo
 	fmt.Print("Enter new vision mission: ")
 	fmt.Scan(&word)
 
+	// Clear the previous vision and mission data
+	// before accepting new input from the user.
 	data.VisionMission = [999]string{}
 	data.VMLength = 0
 
+
+	// Read the new vision and mission statement word by word.
+	// Input ends when the user enters "STOP".
 	for word != "STOP" {
 		data.VisionMission[data.VMLength] = word
 		data.VMLength++
@@ -328,6 +348,8 @@ func sortCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	fmt.Println("[n] Name ")
 	fmt.Print("Sort By: ")
 	fmt.Scan(&choice)
+	// Determine the field used as the sorting key,
+	// either Candidate ID or Candidate Name.
 	switch choice {
 	case "i":
 		candidateSetting.SortBy = "id"
@@ -340,6 +362,9 @@ func sortCandidate(candidateSetting, voterSetting *model.DataSetting) {
 	fmt.Print("Sorting [a] Ascending [d] Descending: ")
 	fmt.Scan(&choice)
 
+	// Determine the sorting order:
+	// Ascending (smallest-to-largest / A-Z)
+	// or Descending (largest-to-smallest / Z-A).
 	switch choice {
 	case "a":
 		candidateSetting.SortOrder = "asc"
@@ -352,6 +377,8 @@ func sortCandidate(candidateSetting, voterSetting *model.DataSetting) {
 
 	fmt.Println()
 
+	// Execute the Selection Sort algorithm based on
+	// the selected sorting field and order.
 	controller.SelectionCandidateSorting(candidateSetting.SortOrder, candidateSetting.SortBy)
 
 	viewAllCandidate(candidateSetting, voterSetting)
