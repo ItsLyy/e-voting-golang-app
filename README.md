@@ -2,6 +2,15 @@
 
 A console-based e-voting application built with Go. It manages candidates and voters, records votes, tallies election results, and demonstrates classic **searching** and **sorting** algorithms in a real use case.
 
+**Member Group:**
+- **Irly Fizaharis - 103012540025**
+    - Feature: Searching, Min and Max, Selection Sorting for Candidate, Insertition Sorting for Voter, CRUD Voter, Intregation between Voter Controller and Voter View.
+    - Menu CLI: Home, Manage Voter, Setting, and Election
+    - Role: Lead the flow of development, Review the code from Pull Request
+- **Muhamad Hammam Misbah - 103012500383**
+    - Feature: Insertion Sorting for Candidate, Selection Sorting for Voter, CRUD Candidate, Intregation between Voter Controller and Voter View
+    - Menu CLI: Manage Candidate and Casting Voter
+    - Role: Review the code before pull request, Testing the app to make sure run smoothly
 ---
 
 ## Description
